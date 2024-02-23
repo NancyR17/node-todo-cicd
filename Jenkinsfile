@@ -1,17 +1,17 @@
 pipeline {
-    agent { label "dev-server"}
+    agent any
     
     stages {
         
         stage("code"){
             steps{
-                git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
-                echo 'bhaiyya code clone ho gaya'
+                git url: "https://github.com/NancyR17/node-todo-cicd.git", branch: "master"
+                echo 'code clone ho gaya'
             }
         }
         stage("build and test"){
             steps{
-                sh "docker build -t node-app-test-new ."
+                sh "docker build -t node-app ."
                 echo 'code build bhi ho gaya'
             }
         }
@@ -28,8 +28,8 @@ pipeline {
                 sh "docker push ${env.dockerHubUser}/node-app-test-new:latest"
                 echo 'image push ho gaya'
                 }
+              }
             }
-        }
         stage("deploy"){
             steps{
                 sh "docker-compose down && docker-compose up -d"
