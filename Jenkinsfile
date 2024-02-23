@@ -37,23 +37,4 @@ pipeline {
             }
         }
     }
-stage('Update Deployment File') {
-        environment {
-            GIT_REPO_NAME = "node-todo-cicd"
-            GIT_USER_NAME = "NancyR17"
-        }
-        steps {
-            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                sh '''
-                    git config user.email "nancytaneja16@gmail.com"
-                    git config user.name "Nancyr17"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" node-todo-cicd/manifests/deployment.yml
-                    git add node-todo-cicd/manifests/deployment.yml
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                '''
-            }
-        }
-    }
-  }
+}
