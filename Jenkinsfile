@@ -37,7 +37,6 @@ pipeline {
             }
         }
     }
-}
 stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "node-todo-cicd"
